@@ -215,6 +215,17 @@ test_that("row_number does not segfault with example from #781", {
   expect_equal( nrow(res), 0L )
 })
 
+test_that("filter does not alter expression (#971)", {
+  my_filter <- ~ am == 1; 
+  expect_error( mtcars %>% filter(my_filter) )
+  expect_equal( my_filter[[2]][[2]], as.name("am") )
+})
+
+test_that("hybrid evaluation handles $ correctly (#1134)", {
+  df <- data_frame( x = 1:10, g = rep(1:5, 2 ) )
+  res <- df %>% group_by(g) %>% filter( x > min(df$x) )
+  expect_equal( nrow(res), 9L )
+})
 
 # data.table --------------------------------------------------------------
 
@@ -231,3 +242,8 @@ test_that("filter correctly handles empty data frames (#782)", {
   expect_true( is.null(names(res)) )
 })
 
+test_that("filter(.,TRUE,TRUE) works (#1210)", {
+  df <- data.frame(x=1:5)
+  res <- filter(df,TRUE,TRUE)
+  expect_equal(res, df)
+})

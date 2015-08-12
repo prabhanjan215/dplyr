@@ -39,6 +39,17 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
+// rank_strings
+IntegerVector rank_strings(CharacterVector s);
+RcppExport SEXP dplyr_rank_strings(SEXP sSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< CharacterVector >::type s(sSEXP);
+    __result = Rcpp::wrap(rank_strings(s));
+    return __result;
+END_RCPP
+}
 // arrange_impl
 List arrange_impl(DataFrame data, LazyDots dots);
 RcppExport SEXP dplyr_arrange_impl(SEXP dataSEXP, SEXP dotsSEXP) {
@@ -109,12 +120,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // combine_vars
-SEXP combine_vars(std::vector<std::string> vars, ListOf<IntegerVector> xs);
+SEXP combine_vars(CharacterVector vars, ListOf<IntegerVector> xs);
 RcppExport SEXP dplyr_combine_vars(SEXP varsSEXP, SEXP xsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
-    Rcpp::traits::input_parameter< std::vector<std::string> >::type vars(varsSEXP);
+    Rcpp::traits::input_parameter< CharacterVector >::type vars(varsSEXP);
     Rcpp::traits::input_parameter< ListOf<IntegerVector> >::type xs(xsSEXP);
     __result = Rcpp::wrap(combine_vars(vars, xs));
     return __result;
@@ -401,13 +412,14 @@ BEGIN_RCPP
 END_RCPP
 }
 // n_distinct
-SEXP n_distinct(SEXP x);
-RcppExport SEXP dplyr_n_distinct(SEXP xSEXP) {
+SEXP n_distinct(SEXP x, bool na_rm);
+RcppExport SEXP dplyr_n_distinct(SEXP xSEXP, SEXP na_rmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
     Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
-    __result = Rcpp::wrap(n_distinct(x));
+    Rcpp::traits::input_parameter< bool >::type na_rm(na_rmSEXP);
+    __result = Rcpp::wrap(n_distinct(x, na_rm));
     return __result;
 END_RCPP
 }

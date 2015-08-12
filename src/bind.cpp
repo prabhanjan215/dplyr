@@ -19,16 +19,17 @@ List rbind__impl( Dots dots ){
 
     std::vector<String> names ;
     int k=0 ;
+
+    Function enc2native( "enc2native" ) ;
     for( int i=0; i<ndata; i++){
         Rcpp::checkUserInterrupt() ;
 
         DataFrame df = dots[i] ;
         if( !df.size() ) continue ;
 
-        DataFrameVisitors visitors( df, df.names() ) ;
         int nrows = df.nrows() ;
 
-        CharacterVector df_names = df.names() ;
+        CharacterVector df_names = enc2native(df.names()) ;
         for( int j=0; j<df.size(); j++){
             SEXP source = df[j] ;
             String name = df_names[j] ;
@@ -84,7 +85,6 @@ List rbind__impl( Dots dots ){
 
         k += nrows ;
     }
-
     int nc = columns.size() ;
     List out(nc) ;
     CharacterVector out_names(nc) ;
@@ -95,7 +95,6 @@ List rbind__impl( Dots dots ){
     out.attr( "names" ) = out_names ;
     set_rownames( out, n );
     out.attr( "class" ) = classes_not_grouped() ;
-
     return out ;
 }
 
@@ -190,4 +189,3 @@ SEXP combine_all( List data ){
     RObject out = coll->get() ;
     return out ;
 }
-

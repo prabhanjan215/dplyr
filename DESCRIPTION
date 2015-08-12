@@ -1,6 +1,6 @@
 Package: dplyr
 Type: Package
-Version: 0.4.2.9000
+Version: 0.4.2.9002
 Title: A Grammar of Data Manipulation
 Description: A fast, consistent tool for working with data frame like objects,
     both in memory and out of memory.
@@ -36,7 +36,7 @@ Suggests:
     methods
 VignetteBuilder: knitr
 LazyData: yes
-LinkingTo: Rcpp (>= 0.11.6),
+LinkingTo: Rcpp (>= 0.12.0),
     BH (>= 1.58.0-1)
 License: MIT + file LICENSE
 Collate:
